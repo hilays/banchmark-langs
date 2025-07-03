@@ -74,3 +74,15 @@ java -cp java TimeTest 10000000
 ```
 
 You can change the numeric argument to adjust the workload for your benchmark.
+
+### Run all benchmarks
+
+A helper script `run_benchmarks.py` builds and runs each implementation in
+sequence. Provide the desired loop count as an argument:
+
+```bash
+python3 run_benchmarks.py 10000000
+```
+
+The script prints the output from each language and a table summarizing the
+timings.
