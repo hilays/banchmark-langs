@@ -1,8 +1,10 @@
 # Benchmark Languages
 
 This repository provides small CLI programs in multiple languages that
-perform the same task: summing numbers while measuring execution time.
-They are intended for comparing runtime performance on Linux/WSL.
+perform an identical, moderately complex workload while measuring the CPU
+cycles consumed.  The programs manipulate integers and strings in a loop so
+the compiler cannot optimise the entire computation away.  They are intended
+for comparing performance across languages on Linux/WSL.
 
 ## Languages Included
 
@@ -29,14 +31,14 @@ sudo apt-get install build-essential golang rustc cargo python3 nodejs default-j
 
 ```bash
 gcc -O2 c/time_test.c -o c/time_test
-./c/time_test 10000000
+./c/time_test 1000000
 ```
 
 ### C++
 
 ```bash
 g++ -O2 cpp/time_test.cpp -o cpp/time_test
-./cpp/time_test 10000000
+./cpp/time_test 1000000
 ```
 
 ### Rust
@@ -44,45 +46,45 @@ g++ -O2 cpp/time_test.cpp -o cpp/time_test
 ```bash
 cd rust
 cargo build --release
-./target/release/rust_app 10000000
+./target/release/rust_app 1000000
 ```
 
 ### Go
 
 ```bash
 go build -o go/time_test go/main.go
-./go/time_test 10000000
+./go/time_test 1000000
 ```
 
 ### Python
 
 ```bash
-python3 python/main.py 10000000
+python3 python/main.py 1000000
 ```
 
 ### Node.js
 
 ```bash
-node node/main.js 10000000
+node node/main.js 1000000
 ```
 
 ### Java
 
 ```bash
 javac java/TimeTest.java
-java -cp java TimeTest 10000000
+java -cp java TimeTest 1000000
 ```
 
 You can change the numeric argument to adjust the workload for your benchmark.
 
 ### Run all benchmarks
 
-A helper script `run_benchmarks.py` builds and runs each implementation in
-sequence. Provide the desired loop count as an argument:
+The helper script `run_benchmarks.py` builds and runs each implementation in
+sequence. Provide the desired iteration count as an argument:
 
 ```bash
-python3 run_benchmarks.py 10000000
+python3 run_benchmarks.py 1000000
 ```
 
 The script prints the output from each language and a table summarizing the
-timings.
+cycle counts.

@@ -1,20 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include <string.h>
+#include <x86intrin.h>
 
 int main(int argc, char *argv[]) {
-    long long n = 10000000;
+    long long n = 1000000;
     if (argc > 1) {
         n = atoll(argv[1]);
     }
-    struct timespec start, end;
-    clock_gettime(CLOCK_MONOTONIC, &start);
-    long long sum = 0;
+    unsigned long long start = __rdtsc();
+    long long sum_len = 0;
+    long long dummy = 0;
+    char buf[32];
     for (long long i = 0; i < n; ++i) {
-        sum += i;
+        long long x = i * 3 + 7;
+        x = (x ^ (x << 2)) + (x >> 3);
+        snprintf(buf, sizeof(buf), "%lld", x);
+        sum_len += strlen(buf);
+        dummy += x;
     }
-    clock_gettime(CLOCK_MONOTONIC, &end);
-    double elapsed = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
-    printf("sum=%lld time=%f\n", sum, elapsed);
+    unsigned long long end = __rdtsc();
+    printf("sum=%lld dummy=%lld cycles=%llu\n", sum_len, dummy, end - start);
     return 0;
 }
